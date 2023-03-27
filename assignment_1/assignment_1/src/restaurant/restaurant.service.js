@@ -5,7 +5,7 @@ const restaurantsJson = JSON.parse(restaurantsFile);
 const restaurants = restaurantsJson.restaurants; // 식당 정보 담겨있는 배열
 
 /** 주어진 이름의 맛집 인덱스 찾기, 없으면 -1 반환 */
-exports.getIndexOfRestaurentByName = (name, restaurants) => {
+const getIndexOfRestaurentByName = (name, restaurants) => {
   for (let i = 0; i < restaurants.length; i++) {
     if (restaurants[i].name === name) {
       return i;

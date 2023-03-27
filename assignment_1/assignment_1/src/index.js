@@ -3,6 +3,8 @@ const restaurantRouter = require("./restaurant/restaurant.route");
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/restaurants", restaurantRouter); // 식당 관련 라우터
 
 app.listen(3000, () => {
