@@ -26,7 +26,7 @@ exports.getRestaurantByName = (req, res) => {
   const restaurantIndex = getIndexOfRestaurentByName(name, restaurants);
 
   if (restaurantIndex === -1) {
-    res.send({ error: "해당 맛집 정보가 존재하지 않습니다." });
+    res.status(404).send({ error: "해당 맛집 정보가 존재하지 않습니다." });
     return;
   }
 
@@ -38,7 +38,7 @@ exports.createRestaurant = (req, res) => {
   const { name, address, phone } = req.body;
 
   if (getIndexOfRestaurentByName(name, restaurants) !== -1) {
-    res.send({ error: "이미 해당 맛집 정보가 존재합니다." });
+    res.status(400).send({ error: "이미 해당 맛집 정보가 존재합니다." });
   }
 
   const newRestaurant = { name, address, phone };
@@ -55,7 +55,7 @@ exports.deleteRestaurentByName = (req, res) => {
   const restaurantIndex = getIndexOfRestaurentByName(name, restaurants);
 
   if (restaurantIndex === -1) {
-    res.send({ error: "해당 맛집 정보가 존재하지 않습니다." });
+    res.status(404).send({ error: "해당 맛집 정보가 존재하지 않습니다." });
   }
 
   const deletedRestaurant = { ...restaurants[restaurantIndex] };
@@ -73,7 +73,7 @@ exports.updateRestaurantByName = (req, res) => {
   const restaurantIndex = getIndexOfRestaurentByName(name, restaurants);
 
   if (restaurantIndex === -1) {
-    res.send({ error: "해당 맛집 정보가 존재하지 않습니다." });
+    res.status(404).send({ error: "해당 맛집 정보가 존재하지 않습니다." });
   }
 
   const updatedRestaurant = { name, address, phone };
