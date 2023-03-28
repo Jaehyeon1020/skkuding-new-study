@@ -1,6 +1,9 @@
 const fs = require("fs");
+const path = require("path");
 
-const restaurantsFile = fs.readFileSync("./data/restaurants.js", "utf8");
+const dataPath = path.join(__dirname, "/data/restaurants.json");
+
+const restaurantsFile = fs.readFileSync(dataPath, "utf8");
 const restaurantsJson = JSON.parse(restaurantsFile);
 const restaurants = restaurantsJson.restaurants; // 식당 정보 담겨있는 배열
 
@@ -44,13 +47,13 @@ exports.createRestaurant = (req, res) => {
   const newRestaurant = { name, address, phone };
   restaurants.push(newRestaurant);
 
-  fs.writeFileSync("./data/restaurants.json", JSON.stringify(restaurantsJson));
+  fs.writeFileSync(dataPath, JSON.stringify(restaurantsJson));
 
   res.send(newRestaurant);
 };
 
 /** 식당 정보 삭제 */
-exports.deleteRestaurentByName = (req, res) => {
+exports.deleteRestaurantByName = (req, res) => {
   const { name } = req.params;
   const restaurantIndex = getIndexOfRestaurentByName(name, restaurants);
 
@@ -61,7 +64,7 @@ exports.deleteRestaurentByName = (req, res) => {
   const deletedRestaurant = { ...restaurants[restaurantIndex] };
   restaurants.splice(restaurantIndex, 1);
 
-  fs.writeFileSync("./data/restaurants.json", JSON.stringify(restaurantsJson));
+  fs.writeFileSync(dataPath, JSON.stringify(restaurantsJson));
 
   res.send(deletedRestaurant);
 };
@@ -79,7 +82,7 @@ exports.updateRestaurantByName = (req, res) => {
   const updatedRestaurant = { name, address, phone };
   restaurants[restaurantIndex] = updatedRestaurant;
 
-  fs.writeFileSync("./data/restaurants.json", JSON.stringify(restaurantsJson));
+  fs.writeFileSync(dataPath, JSON.stringify(restaurantsJson));
 
   res.send(updatedRestaurant);
 };
