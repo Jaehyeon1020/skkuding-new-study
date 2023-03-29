@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const HttpError = require("./custom-error/HttpError");
 
 const dataPath = path.join(__dirname, "/data/restaurants.json");
 
@@ -29,8 +30,7 @@ exports.getRestaurantByName = (req, res) => {
   const restaurantIndex = getIndexOfRestaurentByName(name, restaurants);
 
   if (restaurantIndex === -1) {
-    res.status(404).send({ error: "해당 맛집 정보가 존재하지 않습니다." });
-    return;
+    throw new HttpError("해당 맛집 정보가 존재하지 않습니다.", 404);
   }
 
   res.send(restaurants[restaurantIndex]);
@@ -41,7 +41,7 @@ exports.createRestaurant = (req, res) => {
   const { name, address, phone } = req.body;
 
   if (getIndexOfRestaurentByName(name, restaurants) !== -1) {
-    res.status(400).send({ error: "이미 해당 맛집 정보가 존재합니다." });
+    throw new HttpError("이미 해당 맛집 정보가 존재합니다.", 400);
   }
 
   const newRestaurant = { name, address, phone };
@@ -58,7 +58,7 @@ exports.deleteRestaurantByName = (req, res) => {
   const restaurantIndex = getIndexOfRestaurentByName(name, restaurants);
 
   if (restaurantIndex === -1) {
-    res.status(404).send({ error: "해당 맛집 정보가 존재하지 않습니다." });
+    throw new HttpError("해당 맛집 정보가 존재하지 않습니다.", 404);
   }
 
   const deletedRestaurant = { ...restaurants[restaurantIndex] };
@@ -76,7 +76,7 @@ exports.updateRestaurantByName = (req, res) => {
   const restaurantIndex = getIndexOfRestaurentByName(name, restaurants);
 
   if (restaurantIndex === -1) {
-    res.status(404).send({ error: "해당 맛집 정보가 존재하지 않습니다." });
+    throw new HttpError("해당 맛집 정보가 존재하지 않습니다.", 404);
   }
 
   const updatedRestaurant = { name, address, phone };
@@ -85,4 +85,9 @@ exports.updateRestaurantByName = (req, res) => {
   fs.writeFileSync(dataPath, JSON.stringify(restaurantsJson));
 
   res.send(updatedRestaurant);
+};
+
+/** 오류 처리 핸들러 */
+exports.restaurantErrorHandler = (err, req, res, next) => {
+  res.status(err.httpStatusCode).send({ error: err.message });
 };
