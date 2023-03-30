@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/restaurants", restaurantRouter); // 식당 관련 라우터
 
 app.all("*", (req, res) => {
-  res.status(400).send({ error: "잘못된 경로입니다." });
+  res.status(404).send({ error: "존재하지 않는 페이지입니다." });
 });
 
 app.listen(3000, () => {
