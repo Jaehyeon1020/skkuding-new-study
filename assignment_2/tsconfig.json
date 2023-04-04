@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -13,10 +13,10 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "incremental": true,
-
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "strictFunctionTypes": true
+    "strictFunctionTypes": true,
+    "moduleResolution": "node"
   },
   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
 }
