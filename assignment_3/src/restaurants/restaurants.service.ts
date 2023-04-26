@@ -39,18 +39,14 @@ export class RestaurantsService {
   /** 식당 정보 생성 */
   createRestaurant(createRestaurantDto: CreateRestaurantDto): Restaurant {
     // 이미 존재하는 식당인 경우 에러
-    if (this.getRestaurantByName(createRestaurantDto.name)) {
+    if (this.getRestaurantObjectByName(createRestaurantDto.name)) {
       throw new HttpException(
         '이미 존재하는 맛집입니다.',
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    const newRestaurant = {
-      name: createRestaurantDto.name,
-      address: createRestaurantDto.address,
-      phone: createRestaurantDto.phone,
-    };
+    const newRestaurant = { ...createRestaurantDto };
 
     restaurants.push(newRestaurant);
     return newRestaurant;
