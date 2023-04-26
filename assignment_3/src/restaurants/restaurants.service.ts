@@ -57,6 +57,52 @@ export class RestaurantsService {
   }
 
   /** 식당 정보 삭제 */
+  deleteRestaurantByName(name: string): Restaurant {
+    const deletingRestaurant = this.getRestaurantObjectByName(name);
+
+    // 삭제할 식당이 없으면 에러 발생
+    if (!deletingRestaurant) {
+      throw new HttpException(
+        '존재하지 않는 맛집입니다.',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    // 식당 정보 삭제
+    for (let i = 0; i < restaurants.length; i++) {
+      if (restaurants[i].name === name) {
+        restaurants.splice(i, 1);
+        break;
+      }
+    }
+
+    // 삭제한 식당 정보 반환
+    return deletingRestaurant;
+  }
 
   /** 식당 정보 수정 */
+  updateRestaurantByName(
+    originalName: string,
+    createRestaurantDto: CreateRestaurantDto,
+  ): Restaurant {
+    const updatingRestaurant = this.getRestaurantObjectByName(originalName);
+
+    if (!updatingRestaurant) {
+      throw new HttpException(
+        '존재하지 않는 맛집입니다.',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    // 식당 정보 수정
+    for (let i = 0; i < restaurants.length; i++) {
+      if (restaurants[i].name === originalName) {
+        restaurants[i].address = createRestaurantDto.address;
+        restaurants[i].phone = createRestaurantDto.phone;
+        break;
+      }
+    }
+
+    return updatingRestaurant;
+  }
 }
