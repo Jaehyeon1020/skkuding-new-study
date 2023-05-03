@@ -7,6 +7,8 @@ import {
   Param,
   Patch,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { RestaurantsService } from './restaurants.service';
 import { CreateRestaurantDto } from 'src/dto/create-restaurant.dto';
@@ -29,6 +31,7 @@ export class RestaurantsController {
 
   /** 새로운 식당 정보 등록 */
   @Post('/')
+  @UsePipes(ValidationPipe)
   createRestaurant(@Body() createRestaurantDto: CreateRestaurantDto) {
     return this.restaurantsService.createRestaurant(createRestaurantDto);
   }
@@ -41,6 +44,7 @@ export class RestaurantsController {
 
   /** 식당 정보 수정 */
   @Patch('/:name')
+  @UsePipes(ValidationPipe)
   updateRestaurantByName(
     @Param('name') name: string,
     @Body() createRestaurantDto: CreateRestaurantDto,
