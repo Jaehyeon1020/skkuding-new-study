@@ -25,13 +25,17 @@ export class RestaurantsService {
 
   /** 특정 식당 정보 반환 */
   async getRestaurantByName(name: string) {
-    const restaurant = await this.prisma.restaurant.findFirstOrThrow({
-      where: {
-        name: name,
-      },
-    });
+    try {
+      const restaurant = await this.prisma.restaurant.findFirstOrThrow({
+        where: {
+          name: name,
+        },
+      });
 
-    return restaurant;
+      return restaurant;
+    } catch (e) {
+      throw new NotFoundException('존재하지 않는 식당입니다.');
+    }
   }
 
   /** 식당 정보 생성 */
@@ -44,7 +48,7 @@ export class RestaurantsService {
     });
 
     if (existingRestaurant) {
-      throw new BadRequestException('이미 존재하는 유저입니다.');
+      throw new BadRequestException('이미 존재하는 식당입니다.');
     }
 
     // 새 식당 추가
