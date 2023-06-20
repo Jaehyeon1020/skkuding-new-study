@@ -2,14 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-"""restaurants"""
+"""restaurant"""
 type Restaurant {
-  id: ID!
+  id: Int
   name: String!
   address: String!
   phone: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 """
@@ -20,4 +20,16 @@ scalar DateTime
 type Query {
   restaurant(name: String!): Restaurant!
   restaurants: [Restaurant!]!
+}
+
+type Mutation {
+  createRestaurant(newRestaurantInput: NewRestaurantInput!): Restaurant!
+  deleteRestaurant(name: String!): Restaurant!
+  updateRestaurant(originalName: String!, updatedRestaurantInput: NewRestaurantInput!): Restaurant!
+}
+
+input NewRestaurantInput {
+  name: String!
+  address: String!
+  phone: String!
 }

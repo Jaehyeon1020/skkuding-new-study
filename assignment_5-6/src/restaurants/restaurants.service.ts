@@ -16,9 +16,12 @@ export class RestaurantsService {
   async getRestaurants() {
     return await this.prisma.restaurant.findMany({
       select: {
+        id: true,
         name: true,
         address: true,
         phone: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
   }

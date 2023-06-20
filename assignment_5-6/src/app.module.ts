@@ -16,6 +16,9 @@ import { join } from 'path';
     PrismaModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      buildSchemaOptions: {
+        numberScalarMode: 'integer',
+      },
       playground: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
