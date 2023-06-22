@@ -2,7 +2,7 @@ import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType({ description: 'restaurant' })
 export class Restaurant {
-  @Field((type) => Int, { nullable: true })
+  @Field(() => Int, { nullable: true })
   id?: number;
 
   @Field()
@@ -14,9 +14,9 @@ export class Restaurant {
   @Field()
   phone: string;
 
-  @Field((type) => GraphQLISODateTime, { nullable: true })
+  @Field(() => GraphQLISODateTime, { nullable: true })
   createdAt?: Date;
 
-  @Field((type) => GraphQLISODateTime, { nullable: true })
+  @Field(() => GraphQLISODateTime, { nullable: true })
   updatedAt?: Date;
 }
