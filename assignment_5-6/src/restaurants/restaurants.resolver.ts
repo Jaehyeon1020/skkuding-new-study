@@ -9,8 +9,7 @@ export class RestaurantsResolver {
 
   @Query(() => Restaurant)
   async restaurant(@Args('name') name: string) {
-    const r = await this.restaurantService.getRestaurantByName(name);
-    return r;
+    return await this.restaurantService.getRestaurantByName(name);
   }
 
   @Query(() => [Restaurant])
@@ -27,7 +26,7 @@ export class RestaurantsResolver {
 
   @Mutation(() => Restaurant)
   async deleteRestaurant(@Args('name') name: string) {
-    return this.restaurantService.deleteRestaurantByName(name);
+    return await this.restaurantService.deleteRestaurantByName(name);
   }
 
   @Mutation(() => Restaurant)
@@ -35,7 +34,7 @@ export class RestaurantsResolver {
     @Args('originalName') name: string,
     @Args('updatedRestaurantInput') updatedRestaurantInput: NewRestaurantInput,
   ) {
-    return this.restaurantService.updateRestaurantByName(
+    return await this.restaurantService.updateRestaurantByName(
       name,
       updatedRestaurantInput,
     );
